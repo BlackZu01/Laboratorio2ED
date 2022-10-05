@@ -11,6 +11,7 @@ class CircularLinkedList:
         self.prev = None
         self.ROOT.next = self.TAIL
         self.TAIL.next = self.ROOT
+        self.size = 0
 
     def addNode(self, node: Node) -> None:
         P = node
@@ -22,6 +23,7 @@ class CircularLinkedList:
             self.TAIL.next = P
             self.TAIL = P
         self.TAIL.next = self.ROOT
+        self.size += 1
     
     def first(self):
         self.currentNode = None
@@ -60,32 +62,65 @@ class CircularLinkedList:
         temp = self.prev.next
         self.prev.next = newNode
         newNode.next = moveNode
+        
+
+    def __len__(self):
+        return self.size
 
     def removeNode(self, node: Node) -> None:
-        P = self.ROOT
-
-        while P.next.data != node.data:  
-            P = P.next
-            self.prev = P
-
-        P = P.next
+        if (self.ROOT == None):
+            print("Empty list")
         
-        self.prev.next = P.next
+        
+        p = self.ROOT
+        i = 0
+        while i <= len(self):
+            if p.data == node.data:
+                break
+            temp = p
+            p = p.next
+            i += 1
+        if i > len(self):
+            print('User with mail', node.data, 'is not found\n')
+            return False
+
+        if p == self.ROOT:
+            self.TAIL.next = self.ROOT.next
+            self.ROOT = self.ROOT.next
+            p.next = None
+            self.size -= 1
+            return p
+
+        elif p == self.TAIL:
+            i = 0
+            position = len(self) - 1
+            while i < position:
+                p = p.next
+                i += 1
+            p.next.next = None
+            p.next = self.ROOT
+            self.size -= 1
+            return p
+            
+        else:
+            temp.next = p.next
+            self.size -= 1
+            return p
     
     def reverseList(self):
         current = self.ROOT
         prev = None
         while current != None:
-            self._next = current.next
+            self.next = current.next
             current.next = prev
             prev = current
-            current = self._next
-        Dhead = prev
+            current = self.next
+        DROOT = prev
         temp = self.ROOT
         self.ROOT = self.ROOT.next
         self.TAIL = temp
         self.TAIL.next = self.ROOT
-        return Dhead
+        return DROOT
 
     def __repr__(self) -> str:
         respuesta = ''
@@ -98,4 +133,3 @@ class CircularLinkedList:
             P = P.next
         respuesta += str(P.data)    
         return respuesta
-        
