@@ -94,13 +94,13 @@ class CircularLinkedList:
             i = 0
             position = len(self) - 1
             while i < position:
+                Prevp = p
                 p = p.next
                 i += 1
-            p.next.next = self.ROOT
             p.next = self.ROOT
+            self.TAIL = Prevp.next
             self.size -= 1
             return p
-
         else:
             temp.next = p.next
             self.size -= 1
