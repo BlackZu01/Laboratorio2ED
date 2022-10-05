@@ -81,13 +81,12 @@ class CircularLinkedList:
             p = p.next
             i += 1
         if i > len(self):
-            print('User with mail', node.data, 'is not found\n')
             return False
 
         if p == self.ROOT:
             self.TAIL.next = self.ROOT.next
             self.ROOT = self.ROOT.next
-            p.next = None
+            p.next = self.ROOT
             self.size -= 1
             return p
 
@@ -97,11 +96,11 @@ class CircularLinkedList:
             while i < position:
                 p = p.next
                 i += 1
-            p.next.next = None
+            p.next.next = self.ROOT
             p.next = self.ROOT
             self.size -= 1
             return p
-            
+
         else:
             temp.next = p.next
             self.size -= 1
